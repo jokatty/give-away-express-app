@@ -1,4 +1,4 @@
-<mxfile host="app.diagrams.net" modified="2021-05-25T06:57:19.535Z" agent="5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/90.0.4430.212 Safari/537.36" etag="4JOCIWyln_XrXi3SbizE" version="14.7.0" type="github">
+<mxfile host="app.diagrams.net" modified="2021-05-25T07:00:18.216Z" agent="5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/90.0.4430.212 Safari/537.36" etag="mmAlgjavmogcQEyLEVGn" version="14.7.0" type="github">
   <diagram name="Page-1" id="03018318-947c-dd8e-b7a3-06fadd420f32">
     <mxGraphModel dx="1213" dy="711" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="1100" pageHeight="850" background="none" math="0" shadow="0">
       <root>
@@ -166,7 +166,7 @@
         <mxCell id="XFyouCYtFSHECsHT9rdQ-120" value="" style="swimlane;startSize=0;" vertex="1" parent="1">
           <mxGeometry x="450" y="100" width="200" height="360" as="geometry" />
         </mxCell>
-        <mxCell id="XFyouCYtFSHECsHT9rdQ-121" value="Sign Up" style="rounded=0;whiteSpace=wrap;html=1;" vertex="1" parent="XFyouCYtFSHECsHT9rdQ-120">
+        <mxCell id="XFyouCYtFSHECsHT9rdQ-121" value="Get started/ Sign Up" style="rounded=0;whiteSpace=wrap;html=1;" vertex="1" parent="XFyouCYtFSHECsHT9rdQ-120">
           <mxGeometry y="-10" width="200" height="26.88" as="geometry" />
         </mxCell>
         <mxCell id="XFyouCYtFSHECsHT9rdQ-122" value="full name" style="html=1;shadow=0;dashed=0;shape=mxgraph.bootstrap.rrect;rSize=5;fillColor=none;strokeColor=#999999;align=left;spacing=15;fontSize=14;fontColor=#6C767D;" vertex="1" parent="XFyouCYtFSHECsHT9rdQ-120">
@@ -211,6 +211,9 @@
         <mxCell id="XFyouCYtFSHECsHT9rdQ-149" value="" style="html=1;verticalLabelPosition=bottom;align=center;labelBackgroundColor=#ffffff;verticalAlign=top;strokeWidth=2;strokeColor=#0080F0;shadow=0;dashed=0;shape=mxgraph.ios7.icons.shopping_cart;" vertex="1" parent="XFyouCYtFSHECsHT9rdQ-130">
           <mxGeometry x="80.5" y="274.5" width="21" height="15.5" as="geometry" />
         </mxCell>
+        <mxCell id="XFyouCYtFSHECsHT9rdQ-164" value="Search results" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;" vertex="1" parent="XFyouCYtFSHECsHT9rdQ-130">
+          <mxGeometry x="70.67" width="84.33" height="20" as="geometry" />
+        </mxCell>
         <mxCell id="XFyouCYtFSHECsHT9rdQ-134" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;entryX=0.003;entryY=0.03;entryDx=0;entryDy=0;entryPerimeter=0;" edge="1" parent="1" source="XFyouCYtFSHECsHT9rdQ-4" target="XFyouCYtFSHECsHT9rdQ-130">
           <mxGeometry relative="1" as="geometry">
             <mxPoint x="30" y="480" as="targetPoint" />
@@ -236,6 +239,12 @@
               <mxPoint x="415" y="555" />
             </Array>
           </mxGeometry>
+        </mxCell>
+        <mxCell id="XFyouCYtFSHECsHT9rdQ-165" value="" style="aspect=fixed;pointerEvents=1;shadow=0;dashed=0;html=1;strokeColor=none;labelPosition=center;verticalLabelPosition=bottom;verticalAlign=top;align=center;fillColor=#00188D;shape=mxgraph.mscae.enterprise.filter" vertex="1" parent="1">
+          <mxGeometry x="240" y="490" width="22.22" height="20" as="geometry" />
+        </mxCell>
+        <mxCell id="XFyouCYtFSHECsHT9rdQ-166" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=0.6;exitY=0.5;exitDx=0;exitDy=0;exitPerimeter=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;entryPerimeter=0;" edge="1" parent="1" source="XFyouCYtFSHECsHT9rdQ-165" target="XFyouCYtFSHECsHT9rdQ-165">
+          <mxGeometry relative="1" as="geometry" />
         </mxCell>
       </root>
     </mxGraphModel>
