@@ -1,0 +1,35 @@
+<%- include('partials/header', {title:'GiveAway'}) %>
+<div class="container-fluid container-1 mt-3">
+  <div class="row">
+    <form>
+      <div class="form-group">
+        <button class="btn btn-primary btn-lg" type="submit">
+          List an item
+        </button>
+      </div>
+    </form>
+  </div>
+  <div class="row">
+    <div class="card mt-2" style="width: 18rem">
+      <img src="images/electronics.png" class="card-img-top" alt="..." />
+      <div class="card-body">
+        <p class="card-text"><a href="/listing/electronics">Electronics</a></p>
+      </div>
+    </div>
+
+    <div class="card mt-2" style="width: 18rem">
+      <img src="images/furnitures.png" class="card-img-top" alt="..." />
+      <div class="card-body">
+        <p class="card-text"><a href="/listing/furnitures">Furnitures</a></p>
+      </div>
+    </div>
+
+    <div class="card mt-2" style="width: 18rem">
+      <img src="images/appliances.png" class="card-img-top" alt="..." />
+      <div class="card-body">
+        <p class="card-text">Appliances</p>
+      </div>
+    </div>
+  </div>
+  <%- include('partials/footer') %>
+</div>

@@ -1,0 +1,24 @@
+<%- include('partials/header', {title: `${category}`}) %>
+<div class="container-fluid">
+  <% for(let i =0; i<productInfo.length; i+=1){ %>
+  <div class="card" style="width: 18rem">
+    <img src="..." class="card-img-top" alt="..." />
+    <div class="card-body">
+      <h5 class="card-title"><%= productInfo[i].product_name %></h5>
+      <p class="card-text">
+        <%= productInfo[i].product_description %>
+      </p>
+    </div>
+    <ul class="list-group list-group-flush">
+      <li class="list-group-item">Posted by: <small><%= productInfo[i].posted_by %></small></li>
+      <li class="list-group-item">Posted on: <small><%= productInfo[i].created_at %></small></li>
+      <li class="list-group-item">A third item</li>
+    </ul>
+    <div class="card-body">
+      <a href="/request-item" class="card-link">Request item</a>
+      <a href="#" class="card-link">Request more info</a>
+    </div>
+  </div>
+<% } %>
+</div>
+<%- include('partials/footer') %>

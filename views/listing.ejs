@@ -1,0 +1,48 @@
+<%- include('partials/header', {title: 'list an item'}) %>
+<div class="container listing-container mt-3">
+  <div class="row d-flex justify-content-center">
+    <h2>List a product</h2>
+  </div>
+  <form action="/listing" method="POST">
+    <div class="form-group">
+      <label for="product_category">Product Category</label>
+      <input
+        type="text"
+        class="form-control"
+        id="product_category"
+        name="productCategory"
+      />
+    </div>
+    <div class="form-group">
+      <label for="product_name">Product Name</label>
+      <input
+        type="text"
+        class="form-control"
+        id="product_name"
+        name="productName"
+      />
+    </div>
+    <div class="form-group">
+      <label for="product_description">Product Description</label>
+      <input
+        type="text"
+        class="form-control"
+        id="product_description"
+        name="productDescription"
+      />
+    </div>
+
+    <div class="form-group">
+      <label for="exampleFormControlFile1">Upload an image</label>
+      <input
+        type="file"
+        class="form-control-file"
+        id="exampleFormControlFile1"
+        name="productImageInfo"
+      />
+    </div>
+
+    <button type="submit" class="btn btn-primary">Submit</button>
+  </form>
+</div>
+<%- include('partials/footer') %>
