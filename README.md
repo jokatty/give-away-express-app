@@ -1,6 +1,8 @@
 # GiveAway
 
-###### an express-app
+## 🪴 What does the app do
+
+GiveAway connects people who are willing to give away stuff (electronics/furniture, etc.. in good/ working condition) they do not use or need anymore to someone who needs that particular product.
 
 ## What problem does the app solve,
 
@@ -22,20 +24,29 @@ And then, we all got rich (rather stuff got cheap). Then we mass-produced. We bo
 
 The core idea behind this app is that we give away things we barely used or stopped using and now are collecting dust. We can’t go back to living in a society of borrowing/ lending things but if we want we can give away (for free, of course) and do our bit to reduce the carbon footprint of producing that one product!
 
-## What data does the app handle?
+## 👥 User story:
 
-Inventories of the product listing.
-Peer to peer connect/ transaction on the app
-User login and history.
-Product wishlist.
-<img src="images/database_ERD.png">
+##### Who are the users?
 
-## User story:
+Environmentally conscious people. Someone who realizes climate change is a burning problem for us and willing to do their bit in reducing our carbon footprint.
 
-Say user 'A' has a hairdryer, perfectly working condition. I don't use it because s/he upgraded.
-'A' as an environmentally aware and good soul lists the hairdryer on the 'Give away' app.
-user 'B' needs a new hairdryer goes to Give way to check if the product he needs is available on the platform. If he finds the product he connects with the user 'A' who listed the product.
+##### Who are users goal?
+
+Giving away unused items they own. And finding the item they need.
+
+##### User journey
+
+Say user 'A' has a hairdryer, perfectly working condition. And does not use it because s/he upgraded.
+'A' as an environmentally aware and good soul lists the hairdryer on the 'GiveAway' app.
+user 'B' needs a new hairdryer goes to GiveAway to check if the product s/he needs is available on the platform. If they find the product they connects with the user 'A' who listed the product.
 They can decide on the exchange and related logistics.
 User 'B' either thanks user 'A' for the generosity or buys him a beer.
 
 <img src="images/wireframe.png">
+
+## What data does the app handle?
+
+User signup information
+Inventories of the product listing.
+
+<img src="images/erd.png">
