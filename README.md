@@ -44,7 +44,7 @@ User 'B' either thanks user 'A' for the generosity or buys him a beer.
 
 <img src="public/images/wireframe.jpg">
 
-## What data does the app handle?
+## 🗂 What data does the app handle?
 
 User signup information
 Inventories of the product listing.
