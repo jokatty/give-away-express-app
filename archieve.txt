@@ -1,0 +1,38 @@
+  <div class="row">
+    <% for(let i =0; i<productInfo.length; i+=1){ %>
+      <div class="col-12 d-flex justify-content-center">
+        <div class="card mt-3 " >
+          <img
+            src="/<%= productInfo[i].product_image_info %>"
+            class="card-img-top product-image"
+            alt="product image"
+          />
+          <div class="card-body">
+            <h5 class="card-title"><%= productInfo[i].product_name %></h5>
+            <p class="card-text"><%= productInfo[i].product_description %></p>
+          </div>
+          <ul class="list-group list-group-flush">
+            <li class="list-group-item">
+              Posted by: <small><%= productInfo[i].user_id %></small>
+            </li>
+            <li class="list-group-item">
+              Posted on: <small><%= productInfo[i].created_at %></small>
+            </li>
+            <li class="list-group-item">A third item</li>
+          </ul>
+          <div class="card-body">
+            <a href="/request-item/<%= productInfo[i].id%>" class="card-link"
+              >Request item</a
+            >
+            <a href="/product/<%= productInfo[i].id%>" class="card-link">Full post</a>
+          </div>
+        </div>
+      </div>
+     <% } %>
+           
+  </div>
+
+
+   <a href="/request-item/<%= productInfo[i].id%>" class="card-link "
+              >Request item</a
+            >

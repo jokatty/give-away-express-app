@@ -7,6 +7,7 @@ import cookieParser from 'cookie-parser';
 import axios from 'axios';
 import multer from 'multer';
 import methodOverride from 'method-override';
+import moment from 'moment';
 // set the name of the upload directory
 const multerUpload = multer({ dest: 'uploads/' });
 
@@ -196,6 +197,11 @@ function displayCategoryPage(req, res) {
   const category = `${categoryName[0].toUpperCase()}${categoryName.slice(1)}`;
   const query = `SELECT * FROM listings WHERE product_category = '${categoryName}'`;
   client.query(query).then((result) => {
+    const date = result.rows.map((listing) => {
+      console.log(moment(listing.created_at).from());
+    });
+    console.log(date);
+    console.log(result.rows);
     res.render('category', {
       productInfo: result.rows, category, nav, userName,
     });
@@ -319,6 +325,31 @@ function handleDeleteReq(req, res) {
   }
 }
 
+/**
+ * callback function for '/product' route
+ * renders complete information about the product
+ */
+function renderProductInfo(req, res) {
+  let nav = '';
+  const { userName } = req.cookies;
+  if (userName) {
+    nav = 'index-loggedin-nav';
+  } else {
+    nav = 'index-nav';
+  }
+  const productId = req.params.id;
+  const query = `SELECT * FROM listings JOIN users ON users.id = listings.user_id WHERE listings.id = '${productId}'`;
+  pool.query(query).then((result) => {
+    const date = result.rows.map((listing) => (moment(listing.created_at).from()));
+
+    res.render('product', {
+      productInfo: result.rows[0], nav, userName, date,
+    });
+  }).catch((err) => {
+    console.log(err.stack);
+  });
+}
+
 // get routes
 app.get('/', handleIndexRoute);
 
@@ -335,6 +366,7 @@ app.get('/listing/:category', displayCategoryPage);
 app.get('/request-item/:productInfo', handleItemRequest);
 app.get('/dashboard', renderUserDashboard);
 app.get('/dashboard/:type', renderCustomDashboard);
+app.get('/product/:id', renderProductInfo);
 
 // post routes
 app.post('/register', handleRegistration);
