@@ -34,7 +34,7 @@ const pool = new Pool(pgConnectionConfig);
 client.connect();
 
 /**
- * callback function for register post route. fetch user form data and save in db.
+ * callback function for '/' route. renders index page.
  * check for the userName cookie. if cookie existes set the nav bar for the loggedin user.
  * else set the nav for guest users.
  * @param {string} req - route's request.
@@ -133,7 +133,7 @@ function handleLogin(req, res) {
 }
 
 /**
- * callback function for '/listing.
+ * callback function for '/listing'.
  * checks for cookies. If user is logged in, renders the create listing page.
  * else renders page to prompt user to signup or login.
  */
@@ -147,7 +147,7 @@ function createListing(req, res) {
 }
 
 /**
- * callback function for '/listing post route.
+ * callback function for '/listing' post route.
  * update the listings table with the user input data.
  * use 'multer' for storing user generated data in uploads dir.
  */
@@ -260,7 +260,7 @@ function renderCustomDashboard(req, res) {
 }
 
 /**
- * callback function for '/dashboard route.
+ * callback function for '/dashboard' route.
  * renders user's dashboard with the all transactions history.
  * quries listings table and requests table.
  */
@@ -318,6 +318,7 @@ function handleDeleteReq(req, res) {
     });
   }
 }
+
 // get routes
 app.get('/', handleIndexRoute);
 
