@@ -344,7 +344,12 @@ app.post('/logout', handleLogOut);
 // delete routes
 app.delete('/delete/:item', handleDeleteReq);
 
-const PORT = 3004;
+let PORT;
+if (process.argv[2] === '80') {
+  PORT = 80;
+} else {
+  PORT = 3004;
+}
 app.listen(PORT, () => {
   console.log(`server is running on port: ${PORT}`);
 });

@@ -2,8 +2,9 @@ body {
   font-family: 'Roboto', sans-serif;
 }
 .nav-color {
-  /* background-color: #0b9f93; */
-  background-color: #f4f3e4;
+  /* background-color: #23a196; */
+  /* background-color: #f4f3e4; */
+  background-color: rgba(247, 245, 245, 0.846);
 }
 .container-1
   .register-container
@@ -69,11 +70,6 @@ body {
 .category-container {
   /* background-color: #baf4f2; */
   /* background-color: #a0d9ae; */
-  background-image: linear-gradient(
-    to bottom right,
-    rgb(206, 133, 133),
-    #f7f2cf
-  );
 }
 .product-image {
   width: 150px;

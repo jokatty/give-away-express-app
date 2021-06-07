@@ -46,7 +46,8 @@ User 'B' either thanks user 'A' for the generosity or buys him a beer.
 
 ## What data does the app handle?
 
-User signup information
-Inventories of the product listing.
+- User signup information
+- Product listings data.
+- Product requests data.
 
 <!-- <img src="public/images/erd.png"> -->
