@@ -1,35 +1,79 @@
-<%- include('partials/header', {title:'GiveAway'}) %>
-<div class="container-fluid container-1 mt-3">
-  <div class="row">
-    <form>
-      <div class="form-group">
-        <button class="btn btn-primary btn-lg" type="submit">
-          List an item
-        </button>
-      </div>
-    </form>
-  </div>
-  <div class="row">
-    <div class="card mt-2" style="width: 18rem">
-      <img src="images/electronics.png" class="card-img-top" alt="..." />
-      <div class="card-body">
-        <p class="card-text"><a href="/listing/electronics">Electronics</a></p>
-      </div>
-    </div>
+<%- include('partials/header', {title: 'GiveAway'}) %> 
 
-    <div class="card mt-2" style="width: 18rem">
-      <img src="images/furnitures.png" class="card-img-top" alt="..." />
-      <div class="card-body">
-        <p class="card-text"><a href="/listing/furnitures">Furnitures</a></p>
-      </div>
-    </div>
+<% if (nav === 'index-loggedin-nav') { %>
+ <%- include('partials/index-loggedin-nav') %>
+<% } else { %>
+ <%- include('partials/index-nav') %>
+<% } %>
 
-    <div class="card mt-2" style="width: 18rem">
-      <img src="images/appliances.png" class="card-img-top" alt="..." />
-      <div class="card-body">
-        <p class="card-text">Appliances</p>
-      </div>
-    </div>
-  </div>
-  <%- include('partials/footer') %>
+<div
+  class="
+    container
+    intro-container
+    pt-3
+    d-flex
+    flex-column
+    justify-content-center
+  "
+>
+  <h1>Get rid of your unused items</h1>
+  <p>Give away your stuffs to those who needs it.</p>
+  <a href="/register"
+    ><button class="btn btn-primary btn-block">Sign up</button></a
+  >
 </div>
+
+<div class="container mt-4">
+  <h5>Explore GiveAway</h5>
+</div>
+<!-- category div -->
+<div class="container container-1 mt-3">
+  <div class="row">
+    <div class="col col-sm-6">
+      <div class="card mt-2">
+        <img src="images/electronics.png" class="card-img-top" alt="..." />
+        <div class="card-body">
+          <p class="card-text">
+            <a href="/listing/electronics">Electronics</a>
+          </p>
+        </div>
+      </div>
+    </div>
+    <div class="col col-sm-6">
+      <div class="card mt-2">
+        <img src="images/furnitures.png" class="card-img-top" alt="..." />
+        <div class="card-body">
+          <p class="card-text"><a href="/listing/furnitures">Furnitures</a></p>
+        </div>
+      </div>
+    </div>
+    <div class="col col-sm-6">
+      <!-- style="width: 18rem" -->
+      <div class="card mt-2">
+        <img src="images/appliances.png" class="card-img-top" alt="..." />
+        <div class="card-body">
+          <p class="card-text"><a href="/listing/appliances">Appliances</a></p>
+        </div>
+      </div>
+    </div>
+
+    <div class="col col-sm-6">
+      <div class="card mt-2">
+        <img src="images/toys.png" class="card-img-top toy-image" alt="..." />
+        <div class="card-body">
+          <p class="card-text"><a href="/listing/toys">Toys</a></p>
+        </div>
+      </div>
+    </div>
+
+    <!-- floating add button -->
+    <a href="/listing" class="float">
+      <!-- <button class="my-float">+</button> -->
+      <i class="fa fa-plus my-float"> List item</i>
+    </a>
+  </div>
+</div>
+
+<!-- infinite horizontal scroll -->
+
+<%- include('partials/footer') %>

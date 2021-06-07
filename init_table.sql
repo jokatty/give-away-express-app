@@ -16,3 +16,8 @@ CREATE TABLE IF NOT EXISTS listings(
   posted_by INT,
   is_available BOOLEAN
 );
+
+CREATE TABLE IF NOT EXISTS requests(
+  id SERIAL PRIMARY KEY,
+  listing_id INTEGER
+);

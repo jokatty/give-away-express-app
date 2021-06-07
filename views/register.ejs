@@ -1,5 +1,11 @@
-<%- include('partials/header', {title: 'user registration'}) %>
-<div class="container-fluid register-container">
+<%- include('partials/header', {title: 'user registration'}) %> <%-
+include('partials/index-nav') %>
+<h6 class="mt-2">
+  <i class="fa fa-arrow-left"></i> <a href="/">All listings</a>
+</h6>
+
+<div class="container-fluid register-container mt-3 pt-3">
+  <h3 class="d-flex justify-content-center pb-2">Get started for free</h3>
   <form action="/register" method="POST" class="needs-validation" novalidate>
     <div class="form-row">
       <div class="col-md-6 mb-3">
@@ -61,6 +67,12 @@
         />
       </div>
     </div>
-    <button class="btn btn-primary" type="submit">Submit form</button>
+    <button class="btn btn-primary mb-2" type="submit">Submit</button>
+    <button class="btn btn-outline-primary mb-2 ml-2" type="submit">
+      <a href="/">Cancel</a>
+    </button>
   </form>
+  <small>Already have an account? <a href="/login">Login</a></small>
 </div>
+
+<%- include('partials/footer') %>

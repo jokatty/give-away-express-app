@@ -1,0 +1,46 @@
+<%- include('partials/header', {title:'user dashboard'}) -%>
+<%-
+include(`partials/${nav}`) %>
+
+<div class="container mt-3">
+  <div class="row d-flex justify-content-around">
+    <div class="col col-sm-4">
+      <a href="/dashboard" class="dashboard-filter">All transaction</a>  
+    </div>
+
+     <div class="col col-sm-4">
+      <a href="/dashboard/added-product" class="dashboard-filter">Posted items</a>
+    </div>
+    
+         <div class="col col-sm-4">
+     <a href="/dashboard/request" class="dashboard-filter">Requested items</a>
+    </div>
+  </div>
+</div>
+
+<div class="container mt-3">
+  <hr/>
+  <h2>Posts</h2>
+  <div class="row mt-1">
+    <% for(let i =0; i<listedProducts.length; i+=1){ %>
+      <div class="col col-sm-6">
+       <img class="dashboard-images" src="/<%= listedProducts[i].product_image_info %>">
+       <p><%= listedProducts[i].product_name %></p> 
+      </div>
+   <% } %>
+  </div>
+</div>
+
+<div class="container mt-3">
+  <hr/>
+  <h2>Requests</h2>
+  <div class="row mt-2">
+     <% for(let i =0; i<requestedProducts.length; i+=1){ %>
+      <div class="col col-sm-6">
+       <img class="dashboard-images" src="/<%= requestedProducts[i].product_image_info %>">
+       <p><%= requestedProducts[i].product_name %></p> 
+      </div>
+    <% } %>
+  </div>
+</div>
+<%-include('partials/footer') -%>

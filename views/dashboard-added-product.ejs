@@ -1,0 +1,24 @@
+<%- include('partials/header', {title: 'add-product-dashboard'})  %>
+<%- include('partials/index-loggedin-nav') %>
+<h6 class="mt-2">
+  <i class="fa fa-arrow-left"></i> <a href="/dashboard">All transactions</a>
+</h6>
+  <div class="container mt-4">
+    <div class="row d-flex justify-content-center">
+      <h2>Your listed products</h2>
+    </div>
+    <div class="row mt-4">
+      <% for(let i =0; i<listedProducts.length; i+=1){ %>
+        <div class="col-6">
+          <img class="dashboard-images"src="/<%= listedProducts[i].product_image_info %>" />
+          <p><%= listedProducts[i].product_name %></p>
+          <p>Added on: <%= listedProducts[i].created_at %></p>
+          <form action="/delete/added-product?_method=DELETE" method="POST">
+            <input type="hidden" name="productId" value="<%= listedProducts[i].id %>">
+            <button type="submit" class="btn btn-outline-danger">Delete</button>
+          </form>         
+        </div>
+     <% } %>
+    </div>
+  </div>
+<%- include('partials/footer') %> 

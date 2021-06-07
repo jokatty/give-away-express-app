@@ -1,9 +1,10 @@
 <%- include('partials/header', {title: 'list an item'}) %>
+<%- include('partials/list-a-product-nav') %>
 <div class="container listing-container mt-3">
   <div class="row d-flex justify-content-center">
     <h2>List a product</h2>
   </div>
-  <form action="/listing" method="POST">
+  <form action="/listing" method="POST" enctype="multipart/form-data">
     <div class="form-group">
       <label for="product_category">Product Category</label>
       <input

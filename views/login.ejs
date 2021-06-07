@@ -1,4 +1,6 @@
-<%- include('partials/header', {title: 'login'}) %>
+<%- include('partials/header', {title: 'login'}) %> <%-
+include('partials/index-nav') %>
+
 <div class="container-fluid login-container mt-3">
   <form action="/login" method="POST">
     <div class="form-group">
@@ -23,7 +25,8 @@
         name="pwd"
       />
     </div>
-    <button type="submit" class="btn btn-primary">Submit</button>
+    <button type="submit" class="btn btn-primary mb-2">Submit</button>
   </form>
+  <small>Don't have an account? <a href="/register">Sign Up</a></small>
 </div>
 <%- include('partials/footer') %>

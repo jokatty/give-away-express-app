@@ -1,0 +1,23 @@
+<%- include('partials/header', {title: 'placeholder for welcome username'}) %>
+<%- include('partials/index-loggedin-nav') %>
+<h6 class="mt-2">
+  <i class="fa fa-arrow-left"></i> <a href="/dashboard">All transactions</a>
+</h6>
+<div class="container mt-3">
+  <div class="row d-flex justify-content-center">
+      <h2>Items you requested</h2>
+  </div>
+
+  <div class="row">
+    <% for (let i =0; i<requestedProducts.length; i+=1){ %>
+      <div class="col-6 mt-1">
+        <img class="dashboard-images" src="/<%= requestedProducts[i].product_image_info %>">
+        <br>
+        <%= requestedProducts[i].product_name %>
+        <br>
+        <%= requestedProducts[i].created_at %>
+      </div>
+    <% } %>
+  </div>
+</div>
+<%- include ('partials/footer') %>

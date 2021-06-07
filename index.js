@@ -5,6 +5,10 @@ import pg from 'pg';
 import jsSHA from 'jssha';
 import cookieParser from 'cookie-parser';
 import axios from 'axios';
+import multer from 'multer';
+import methodOverride from 'method-override';
+// set the name of the upload directory
+const multerUpload = multer({ dest: 'uploads/' });
 
 const { Client } = pg;
 const { Pool } = pg;
@@ -12,8 +16,10 @@ const { Pool } = pg;
 const app = express();
 app.set('view engine', 'ejs');
 app.use(express.static('public'));
+app.use(express.static('uploads'));
 app.use(express.urlencoded({ extended: true }));
 app.use(cookieParser());
+app.use(methodOverride('_method'));
 
 //  configure database
 const pgConnectionConfig = {
@@ -28,21 +34,23 @@ const pool = new Pool(pgConnectionConfig);
 client.connect();
 
 /**
- * callback function for index route. renders index page
+ * callback function for register post route. fetch user form data and save in db.
+ * check for the userName cookie. if cookie existes set the nav bar for the loggedin user.
+ * else set the nav for guest users.
  * @param {string} req - route's request.
  * @param {string} res - route's response.
  */
-function renderIndexPage(req, res) {
-  res.render('index');
-}
-
-/**
- * callback function for register route. renders user registration page.
- * @param {string} req - route's request.
- * @param {string} res - route's response.
- */
-function registerUser(req, res) {
-  res.render('register');
+function handleIndexRoute(req, res) {
+  const { userName } = req.cookies;
+  let nav;
+  if (userName) {
+    nav = 'index-loggedin-nav';
+  } else {
+    nav = 'index-nav';
+  }
+  res.render('index', {
+    nav, userName,
+  });
 }
 
 /**
@@ -64,14 +72,25 @@ function handleRegistration(req, res) {
       return;
     }
     console.log(result);
-    res.send('this page will direct user to their dashboard');
+    res.cookie('isLoggedIn', 'true');
+    res.cookie('userName', `${fname}`);
+
+    const query = `SELECT id FROM users WHERE first_name = '${fname}'`;
+    pool.query(query, (error, selectResult) => {
+      if (err) {
+        console.log(error);
+        return;
+      }
+      res.cookie('userId', `${selectResult.rows[0].id}`);
+      res.redirect('/listing');
+    });
   });
 }
 
-function loginUser(req, res) {
-  res.render('login');
-}
-
+/**
+ * callback function for login post route.
+ *  check for user auth.
+ */
 function handleLogin(req, res) {
   const { email, pwd } = req.body;
   pool.query(`SELECT * FROM users WHERE email = '${email}'`, (err, result) => {
@@ -99,58 +118,232 @@ function handleLogin(req, res) {
     }
     res.cookie('isLoggedIn', true);
     res.cookie('userName', `${user[0].first_name}`);
-    res.send('logged in');
+    res.cookie('userId', `${user[0].id}`);
+
+    if (req.cookies.requestItem === 'true') {
+      res.clearCookie('requestItem');
+      res.redirect('/');
+      return;
+    }
+    // if user login request comes from listings page, redirect user back to the page.
+    // logic yet to be worked out.
+    // res.redirect('/listing');
+    res.redirect('/');
   });
 }
 
+/**
+ * callback function for '/listing.
+ * checks for cookies. If user is logged in, renders the create listing page.
+ * else renders page to prompt user to signup or login.
+ */
 function createListing(req, res) {
   const { isLoggedIn, userName } = req.cookies;
   if (isLoggedIn === 'true') {
     res.render('listing');
   } else {
-    alert('please login to list a product');
-    res.render('register');
+    res.render('guest-user');
   }
 }
+
+/**
+ * callback function for '/listing post route.
+ * update the listings table with the user input data.
+ * use 'multer' for storing user generated data in uploads dir.
+ */
 function handleListing(req, res) {
+  console.log('request came in');
+  console.log(req.file);
   const {
-    productCategory, productName, productDescription, productImageInfo,
+    productCategory, productName, productDescription,
   } = req.body;
-  const listingBy = req.cookies.userName;
-  const query = `INSERT INTO listings(product_category, product_name, product_description, product_image_info, posted_by, is_available) VALUES ('${productCategory}', '${productName}', '${productDescription}', '${productImageInfo}', '5', 'true') `;
-  client.query(query).then((result) => {
+  const { userId } = req.cookies;
+
+  const query = `INSERT INTO listings(product_category, product_name, product_description, product_image_info, user_id, is_available) VALUES ('${productCategory}', '${productName}', '${productDescription}', '${req.file.filename}', '${userId}', 'true') `;
+
+  // user promises for nested queries
+  pool.query(query).then((result) => {
     console.log(result);
-  }).catch((err) => {
-    console.log(err.stack);
-  });
+    return pool.query(`SELECT * FROM listings WHERE product_category = '${productCategory}'`);
+  }).then((selectResult) => {
+    console.log(selectResult);
+    const category = `${productCategory[0].toUpperCase()}${productCategory.slice(1)}`;
+    // to direct user to the product category page they posted
+    // res.render('category', { productInfo: selectResult.rows, category });
+    res.redirect('/dashboard/added-product');
+  })
+    .catch((err) => {
+      console.log(err.stack);
+    });
 }
 
+/**
+ * callback function to render category page.
+ * checks for user login status and sets the nav
+ * queries the 'listings' table and fetches products of the the requested categoy.
+ */
 function displayCategoryPage(req, res) {
+  let nav = '';
+  const { userName } = req.cookies;
+  if (userName) {
+    nav = 'index-loggedin-nav';
+  } else {
+    nav = 'index-nav';
+  }
+
+  // extract params data passed in the route
   const categoryName = req.params.category;
+  const category = `${categoryName[0].toUpperCase()}${categoryName.slice(1)}`;
   const query = `SELECT * FROM listings WHERE product_category = '${categoryName}'`;
   client.query(query).then((result) => {
-    console.log(result);
-    // res.send(result.rows);
-    res.render('category', { productInfo: result.rows, category: categoryName });
+    res.render('category', {
+      productInfo: result.rows, category, nav, userName,
+    });
   }).catch((err) => {
     console.log(err.stack);
   });
 }
 
+/**
+ * callback function for '/request-item'.
+ * checks for user logged in status.
+ * fetches requested product's information from route params
+ * updates the 'requests' table in db with the new requests.
+ */
 function handleItemRequest(req, res) {
-  // res.render('item-request');
-  res.send('thanks for requesting the item. List owner will get in touch with you');
+  if (!req.cookies.isLoggedIn) {
+    res.cookie('requestItem', 'true');
+    res.render('guest-user');
+    return;
+  }
+  // params passes the listing_id
+  const { productInfo } = req.params;
+  const listingId = productInfo;
+  const { userId } = req.cookies;
+  const query = `INSERT INTO requests (listing_id, user_id) VALUES ('${listingId}', '${userId}')`;
+  pool.query(query).then().catch((err) => { console.log(err); });
+
+  res.render('request-confirmation');
 }
-app.get('/', renderIndexPage);
-app.get('/register', registerUser);
-app.get('/login', loginUser);
+
+/**
+ * callback function for 'dashboard/:type'.
+ * based on route param 'type' renders either all requests or all added-items page.
+ */
+
+function renderCustomDashboard(req, res) {
+  if (req.params.type === 'request') {
+    const { userId, userName } = req.cookies;
+    console.log(userId);
+    const query = `SELECT * FROM requests JOIN listings ON listings.user_id = requests.user_id WHERE requests.user_id = '${userId}' `;
+    pool.query(query, (err, result) => {
+      if (err) {
+        console.log(err);
+        return;
+      }
+      console.log(result);
+      res.render('dashboard-request', { requestedProducts: result.rows, userName });
+    });
+  }
+  if (req.params.type === 'added-product') {
+    const { userId, userName } = req.cookies;
+    const query = `SELECT * FROM listings WHERE user_id = '${userId}'`;
+    pool.query(query, (err, result) => {
+      if (err) {
+        console.log(err);
+        return err;
+      }
+      console.log(result);
+      res.render('dashboard-added-product', { listedProducts: result.rows, userName });
+    });
+  }
+}
+
+/**
+ * callback function for '/dashboard route.
+ * renders user's dashboard with the all transactions history.
+ * quries listings table and requests table.
+ */
+function renderUserDashboard(req, res) {
+  const { userId } = req.cookies;
+  let listingResult;
+  let requestResult;
+  let nav = '';
+  const { userName } = req.cookies;
+  if (userName) {
+    nav = 'index-loggedin-nav';
+  } else {
+    nav = 'index-nav';
+  }
+
+  const query = `SELECT * FROM listings WHERE user_id = '${userId}'`;
+  // use of promisses for nested queries.
+  pool.query(query).then((result) => {
+    listingResult = result;
+    return pool.query(`SELECT * FROM listings JOIN requests ON requests.listing_id =listings.id WHERE requests.user_id = '${userId}'`);
+  }).then((selectResult) => {
+    requestResult = selectResult;
+    res.render('dashboard-user', {
+      listedProducts: listingResult.rows, requestedProducts: requestResult.rows, nav, userName,
+    });
+  });
+}
+
+/**
+ * callback function for '/logout' post route
+ * clear cookies to log out the user.
+ * render logout confirmation page.
+ */
+function handleLogOut(req, res) {
+  res.clearCookie('userName');
+  res.clearCookie('isLoggedIn');
+  res.clearCookie('userId');
+  res.render('logout');
+}
+
+/**
+ * callback function for '/delete' route
+ * delete the product from the listings table in db.
+ */
+function handleDeleteReq(req, res) {
+  if (req.params.item === 'added-product') {
+    const { productId } = req.body;
+    const deleteQuery = `DELETE FROM listings WHERE id = '${productId}'`;
+    pool.query(deleteQuery, (err, result) => {
+      if (err) {
+        console.log(err);
+        return;
+      }
+      res.redirect('/dashboard/added-product');
+    });
+  }
+}
+// get routes
+app.get('/', handleIndexRoute);
+
+app.get('/register', (req, res) => {
+  res.render('register');
+});
+
+app.get('/login', (req, res) => {
+  res.render('login');
+});
+
 app.get('/listing', createListing);
 app.get('/listing/:category', displayCategoryPage);
-app.get('/request-item', handleItemRequest);
+app.get('/request-item/:productInfo', handleItemRequest);
+app.get('/dashboard', renderUserDashboard);
+app.get('/dashboard/:type', renderCustomDashboard);
+
 // post routes
 app.post('/register', handleRegistration);
 app.post('/login', handleLogin);
-app.post('/listing', handleListing);
+app.post('/listing', multerUpload.single('productImageInfo'), handleListing);
+app.post('/logout', handleLogOut);
+
+// delete routes
+app.delete('/delete/:item', handleDeleteReq);
+
 const PORT = 3004;
 app.listen(PORT, () => {
   console.log(`server is running on port: ${PORT}`);
