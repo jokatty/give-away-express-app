@@ -11,7 +11,6 @@ import moment from 'moment';
 // set the name of the upload directory
 const multerUpload = multer({ dest: 'uploads/' });
 
-const { Client } = pg;
 const { Pool } = pg;
 
 const app = express();
@@ -30,9 +29,7 @@ const pgConnectionConfig = {
   port: '5432',
 };
 
-const client = new Client(pgConnectionConfig);
 const pool = new Pool(pgConnectionConfig);
-client.connect();
 
 /**
  * callback function for '/' route. renders index page.
