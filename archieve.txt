@@ -78,3 +78,25 @@ your listed products:
     >
   </div>
 </div>
+
+handle registration
+
+  // pool.query(query, (err, result) => {
+  //   if (err) {
+  //     console.log(`insert query error:${err}`);
+  //     return;
+  //   }
+  //   console.log(result);
+  //   res.cookie('isLoggedIn', 'true');
+  //   res.cookie('userName', `${fname}`);
+
+  //   const query = `SELECT id FROM users WHERE first_name = '${fname}'`;
+  //   pool.query(query, (error, selectResult) => {
+  //     if (err) {
+  //       console.log(error);
+  //       return;
+  //     }
+  //     res.cookie('userId', `${selectResult.rows[0].id}`);
+  //     res.redirect('/listing');
+  //   });
+  // });

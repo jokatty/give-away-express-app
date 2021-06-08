@@ -64,25 +64,14 @@ function handleRegistration(req, res) {
   shaObj.update(req.body.pwd);
   const hashedPassword = shaObj.getHash('HEX');
   const query = `INSERT INTO users (first_name, last_name, email, password) VALUES ('${fname}', '${lname}', '${email}', '${hashedPassword}')`;
-  pool.query(query, (err, result) => {
-    if (err) {
-      console.log(`insert query error:${err}`);
-      return;
-    }
-    console.log(result);
+  pool.query(query).then(() => {
     res.cookie('isLoggedIn', 'true');
     res.cookie('userName', `${fname}`);
-
-    const query = `SELECT id FROM users WHERE first_name = '${fname}'`;
-    pool.query(query, (error, selectResult) => {
-      if (err) {
-        console.log(error);
-        return;
-      }
-      res.cookie('userId', `${selectResult.rows[0].id}`);
-      res.redirect('/listing');
-    });
-  });
+    return pool.query(`SELECT id FROM users WHERE first_name = '${fname}'`);
+  }).then((result) => {
+    res.cookie('userId', `${result.rows[0].id}`);
+    res.redirect('/listing');
+  }).catch((err) => { console.log(err.stack); });
 }
 
 /**
@@ -192,7 +181,7 @@ function displayCategoryPage(req, res) {
   const categoryName = req.params.category;
   const category = `${categoryName[0].toUpperCase()}${categoryName.slice(1)}`;
   const query = `SELECT * FROM listings WHERE product_category = '${categoryName}'`;
-  client.query(query).then((result) => {
+  pool.query(query).then((result) => {
     const date = result.rows.map((listing) => {
       console.log(moment(listing.created_at).from());
     });
