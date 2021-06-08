@@ -191,7 +191,6 @@ function displayCategoryPage(req, res) {
   } else {
     nav = 'index-nav';
   }
-
   // extract params data passed in the route
   const categoryName = req.params.category;
   const category = `${categoryName[0].toUpperCase()}${categoryName.slice(1)}`;
@@ -200,8 +199,6 @@ function displayCategoryPage(req, res) {
     const date = result.rows.map((listing) => {
       console.log(moment(listing.created_at).from());
     });
-    console.log(date);
-    console.log(result.rows);
     res.render('category', {
       productInfo: result.rows, category, nav, userName,
     });
@@ -224,12 +221,13 @@ function handleItemRequest(req, res) {
   }
   // params passes the listing_id
   const { productInfo } = req.params;
+  console.log(productInfo);
   const listingId = productInfo;
   const { userId } = req.cookies;
   const query = `INSERT INTO requests (listing_id, user_id) VALUES ('${listingId}', '${userId}')`;
-  pool.query(query).then().catch((err) => { console.log(err); });
-
-  res.render('request-confirmation');
+  pool.query(query).then(() => {
+    res.render('request-confirmation');
+  }).catch((err) => { console.log(err); });
 }
 
 /**
@@ -241,14 +239,15 @@ function renderCustomDashboard(req, res) {
   if (req.params.type === 'request') {
     const { userId, userName } = req.cookies;
     console.log(userId);
-    const query = `SELECT * FROM requests JOIN listings ON listings.user_id = requests.user_id WHERE requests.user_id = '${userId}' `;
+    const query = `SELECT * FROM requests JOIN listings ON listings.id = requests.listing_id WHERE requests.user_id = '${userId}' `;
     pool.query(query, (err, result) => {
       if (err) {
         console.log(err);
         return;
       }
       console.log(result);
-      res.render('dashboard-request', { requestedProducts: result.rows, userName });
+      const date = result.rows.map((listing) => (moment(listing.created_at).from()));
+      res.render('dashboard-request', { requestedProducts: result.rows, userName, date });
     });
   }
   if (req.params.type === 'added-product') {
@@ -260,7 +259,8 @@ function renderCustomDashboard(req, res) {
         return err;
       }
       console.log(result);
-      res.render('dashboard-added-product', { listedProducts: result.rows, userName });
+      const date = result.rows.map((listing) => (moment(listing.created_at).from()));
+      res.render('dashboard-added-product', { listedProducts: result.rows, userName, date });
     });
   }
 }
@@ -289,10 +289,11 @@ function renderUserDashboard(req, res) {
     return pool.query(`SELECT * FROM listings JOIN requests ON requests.listing_id =listings.id WHERE requests.user_id = '${userId}'`);
   }).then((selectResult) => {
     requestResult = selectResult;
+    console.log(selectResult);
     res.render('dashboard-user', {
       listedProducts: listingResult.rows, requestedProducts: requestResult.rows, nav, userName,
     });
-  });
+  }).catch((err) => { console.log(err); });
 }
 
 /**
@@ -322,6 +323,16 @@ function handleDeleteReq(req, res) {
       }
       res.redirect('/dashboard/added-product');
     });
+  } else if (req.params.item === 'requested-product') {
+    const { productId } = req.body;
+    const deleteQuery = `DELETE FROM listings WHERE id = '${productId}'`;
+    pool.query(deleteQuery, (err, result) => {
+      if (err) {
+        console.log(err);
+        return;
+      }
+      res.redirect('/dashboard/request');
+    });
   }
 }
 
@@ -343,7 +354,7 @@ function renderProductInfo(req, res) {
     const date = result.rows.map((listing) => (moment(listing.created_at).from()));
 
     res.render('product', {
-      productInfo: result.rows[0], nav, userName, date,
+      productInfo: result.rows[0], nav, userName, date, productId,
     });
   }).catch((err) => {
     console.log(err.stack);

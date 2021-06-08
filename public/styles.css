@@ -1,6 +1,19 @@
 body {
   font-family: 'Roboto', sans-serif;
 }
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  color: rgb(82, 79, 79);
+}
+
+p {
+  color: rgb(128, 125, 125);
+}
 .nav-color {
   /* background-color: #23a196; */
   /* background-color: #f4f3e4; */
