@@ -41,13 +41,19 @@ const pool = new Pool(pgConnectionConfig);
 function handleIndexRoute(req, res) {
   const { userName } = req.cookies;
   let nav;
+  let redirectLink;
+  let redirectText;
   if (userName) {
     nav = 'index-loggedin-nav';
+    redirectLink = '/dashboard';
+    redirectText = 'User dashboard';
   } else {
     nav = 'index-nav';
+    redirectLink = '/register';
+    redirectText = 'Sign up';
   }
   res.render('index', {
-    nav, userName,
+    nav, userName, redirectText, redirectLink,
   });
 }
 
@@ -90,7 +96,6 @@ function handleLogin(req, res) {
       res.status(403).send('login failed');
       return;
     }
-
     const user = result.rows;
     console.log(result.rows[0]);
     const shaObj = new jsSHA('SHA-512', 'TEXT', { encoding: 'UTF8' });
