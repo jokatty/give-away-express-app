@@ -43,12 +43,20 @@ p {
   background-repeat: no-repeat;
   background-size: cover;
   position: relative;
+  padding-left: 5vw;
 }
 /* body {
   font-family: Verdana, Geneva, sans-serif;
   font-size: 18px;
   background-color: #ccc;
 } */
+
+.explore-give-away {
+  width: 100vw;
+}
+.explore-give-away h5 {
+  font-size: 1.25rem;
+}
 
 .float {
   position: fixed;
@@ -67,6 +75,14 @@ p {
   margin-top: 22px;
 }
 
+/* font-family: 'Noto Sans JP', sans-serif;
+font-family: 'Poppins', sans-serif; */
+
+.cta-btn {
+  font-size: 1rem;
+  font-weight: bold;
+  font-family: 'Noto Sans JP', sans-serif;
+}
 .carousel-image {
   height: 20vh;
 }
@@ -75,9 +91,13 @@ p {
   color: #999;
 }
 
-.toy-image {
+/* .toy-image {
   width: 156px;
   height: 156px;
+} */
+
+.toy-image {
+  padding-bottom: 20px;
 }
 
 .product-image {
@@ -113,4 +133,52 @@ p {
 /* footer style */
 footer {
   background-color: #f4f3e4;
+}
+
+@media (min-width: 800px) {
+  .intro-container {
+    width: 100vw;
+    height: 70vh;
+    /* background-image: linear-gradient(
+      rgba(200, 192, 192, 0.5),
+      rgba(52, 51, 51, 0.5)
+    ),
+    url('/images/banner.jpg'); */
+    background-image: url('images/banner.jpg');
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+    position: relative;
+  }
+
+  /* .container-1 {
+    width: 80%;
+  } */
+  .hero-btn {
+    width: 15vw;
+    height: 7vh;
+    font-size: 1.25rem;
+  }
+  /* .explore-give-away h5 {
+    font-size: 1.75rem;
+  } */
+  .toy-image {
+    padding-bottom: 13.4%;
+  }
+}
+
+@media (min-width: 750px) {
+  .container-1 {
+    width: 80%;
+  }
+  .explore-give-away h5 {
+    font-size: 1.75rem;
+    margin-top: 5vh;
+  }
+}
+
+@media (max-width: 450px) {
+  .hero-btn {
+    width: 100%;
+  }
 }

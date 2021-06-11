@@ -8,7 +8,7 @@
 
 <div
   class="
-    container
+    container-fluid
     intro-container
     pt-3
     d-flex
@@ -19,19 +19,24 @@
   <h1>Get rid of your unused items</h1>
   <p>Give away your stuffs to those who needs it.</p>
   <a href="<%= redirectLink %>"
-    ><button class="btn btn-primary btn-block"><%= redirectText %></button></a
+    ><button class="btn btn-primary  hero-btn"><%= redirectText %></button></a
   >
 </div>
 
-<div class="container mt-4">
-  <h5>Explore GiveAway</h5>
+<div class="container mt-4 explore-give-away">
+  <div class="row">
+    <div class="col-12">
+        <h5>Explore GiveAway</h5>
+    </div>
+  </div>
+  
 </div>
 <!-- category div -->
-<div class="container container-1 mt-3 mb-3">
+<div class="container-fluid container-1 mt-3 mb-3">
   <div class="row">
-    <div class="col col-sm-6">
+    <div class="col col-sm-6 col-md-4 col-lg-3">
       <div class="card mt-2">
-        <img src="images/electronics.png" class="card-img-top" alt="..." />
+        <img src="images/electronics.png" class="card-img-top" alt="electronics image" />
         <div class="card-body">
           <p class="card-text">
             <a href="/listing/electronics">Electronics</a>
@@ -39,27 +44,28 @@
         </div>
       </div>
     </div>
-    <div class="col col-sm-6">
+    <div class="col col-sm-6 col-md-4 col-lg-3">
       <div class="card mt-2">
-        <img src="images/furnitures.png" class="card-img-top" alt="..." />
+        <img src="images/furnitures.png" class="card-img-top" alt="furniture image" />
         <div class="card-body">
           <p class="card-text"><a href="/listing/furnitures">Furnitures</a></p>
         </div>
       </div>
     </div>
-    <div class="col col-sm-6">
+    <div class="col col-sm-6 col-md-4 col-lg-3">
       <!-- style="width: 18rem" -->
       <div class="card mt-2">
-        <img src="images/appliances.png" class="card-img-top" alt="..." />
+        <img src="images/appliances.png" class="card-img-top" alt="appliance image" />
         <div class="card-body">
           <p class="card-text"><a href="/listing/appliances">Appliances</a></p>
         </div>
       </div>
     </div>
 
-    <div class="col col-sm-6">
+    <div class="col col-sm-6 col-md-4 col-lg-3">
+      <!-- style="width: 18rem" -->
       <div class="card mt-2">
-        <img src="images/toys.png" class="card-img-top toy-image" alt="..." />
+        <img src="images/toys.png" class="card-img-top toy-image" alt="toy image" />
         <div class="card-body">
           <p class="card-text"><a href="/listing/toys">Toys</a></p>
         </div>
@@ -69,7 +75,7 @@
     <!-- floating add button -->
     <a href="/listing" class="float">
       <!-- <button class="my-float">+</button> -->
-      <i class="fa fa-plus my-float"> List item</i>
+      <i class="fa fa-plus my-float"> <span class="cta-btn">List item</span></i>
     </a>
   </div>
 </div>
