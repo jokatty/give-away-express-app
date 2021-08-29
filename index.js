@@ -8,8 +8,42 @@ import axios from 'axios';
 import multer from 'multer';
 import methodOverride from 'method-override';
 import moment from 'moment';
+// s3 set ups
+import aws from 'aws-sdk';
+import multerS3 from 'multer-s3';
+// initialize S3 SDK
+const s3 = new aws.S3({
+  accessKeyId: process.env.GIVEAWAY_ACCESS_KEY_ID,
+  secretAccessKey: process.env.GIVEAWAY_SECRET_ACCESS_KEY,
+});
+
 // set the name of the upload directory
-const multerUpload = multer({ dest: 'uploads/' });
+// for local development:
+// const multerUpload = multer({ dest: 'uploads/' });
+
+/* for deployment */
+
+// my test to see if I can still store data locally.
+let multerUpload;
+if (process.env.GIVEAWAY_ACCESS_KEY_ID) {
+  console.log('I should run in production');
+  multerUpload = multer({
+    storage: multerS3({
+      s3,
+      bucket: 'giveawayproject',
+      acl: 'public-read',
+      metadata: (request, file, callback) => {
+        callback(null, { fieldName: file.fieldname });
+      },
+      key: (request, file, callback) => {
+        callback(null, Date.now().toString());
+      },
+    }),
+  });
+} else {
+  console.log('running locally');
+  multerUpload = multer({ dest: 'uploads/' });
+}
 
 const { Pool } = pg;
 
