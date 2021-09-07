@@ -24,41 +24,41 @@ const s3 = new aws.S3({
 
 /* for deployment */
 // my test to see if I can still store data locally.
-let multerUpload;
-if (process.env.GIVEAWAY_ACCESS_KEY_ID) {
-  console.log('I should run in production');
-  multerUpload = multer({
-    storage: multerS3({
-      s3,
-      bucket: process.env.S3_BUCKET_NAME,
-      acl: 'public-read',
-      metadata: (request, file, callback) => {
-        callback(null, { fieldName: file.fieldname });
-      },
-      key: (request, file, callback) => {
-        callback(null, Date.now().toString());
-      },
-    }),
-  });
-} else {
-  console.log('running locally');
-  multerUpload = multer({ dest: 'uploads/' });
-}
+// let multerUpload;
+// if (process.env.GIVEAWAY_ACCESS_KEY_ID) {
+//   console.log('I should run in production');
+//   multerUpload = multer({
+//     storage: multerS3({
+//       s3,
+//       bucket: process.env.S3_BUCKET_NAME,
+//       acl: 'public-read',
+//       metadata: (request, file, callback) => {
+//         callback(null, { fieldName: file.fieldname });
+//       },
+//       key: (request, file, callback) => {
+//         callback(null, Date.now().toString());
+//       },
+//     }),
+//   });
+// } else {
+//   console.log('running locally');
+//   multerUpload = multer({ dest: 'uploads/' });
+// }
 
-// only for prod i guess
-// const multerUpload = multer({
-//   storage: multerS3({
-//     s3,
-//     bucket: process.env.S3_BUCKET_NAME,
-//     acl: 'public-read',
-//     metadata: (request, file, callback) => {
-//       callback(null, { fieldName: file.fieldname });
-//     },
-//     key: (request, file, callback) => {
-//       callback(null, Date.now().toString());
-//     },
-//   }),
-// });
+// RA's documentation
+const multerUpload = multer({
+  storage: multerS3({
+    s3,
+    bucket: process.env.S3_BUCKET_NAME,
+    acl: 'public-read',
+    metadata: (request, file, callback) => {
+      callback(null, { fieldName: file.fieldname });
+    },
+    key: (request, file, callback) => {
+      callback(null, Date.now().toString());
+    },
+  }),
+});
 
 const { Pool } = pg;
 
@@ -206,13 +206,15 @@ function createListing(req, res) {
 function handleListing(req, res) {
   console.log('request came in');
   console.log(req.file);
+  console.log('HERE IS FILE LOCATION');
+  console.log(req.file.location);
   const {
     productCategory, productName, productDescription,
   } = req.body;
   const { userId } = req.cookies;
 
-  const query = `INSERT INTO listings(product_category, product_name, product_description, product_image_info, user_id, is_available) VALUES ('${productCategory}', '${productName}', '${productDescription}', '${req.file.filename}', '${userId}', 'true') `;
-
+  const query = `INSERT INTO listings(product_category, product_name, product_description, product_image_info, user_id, is_available) VALUES ('${productCategory}', '${productName}', '${productDescription}', '${req.file.location}', '${userId}', 'true') `;
+  // note: changed req.file.filename to req.file.location to get image file location in s3
   // user promises for nested queries
   pool.query(query).then((result) => {
     console.log(result);
