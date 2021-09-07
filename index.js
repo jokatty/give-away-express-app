@@ -23,7 +23,7 @@ const s3 = new aws.S3({
 // const multerUpload = multer({ dest: 'uploads/' });
 
 /* for deployment */
-// my test to see if I can still store data locally.
+// MULTER CONFIG FOR DEV AND PROD.
 let multerUpload;
 if (process.env.GIVEAWAY_ACCESS_KEY_ID) {
   console.log('I should run in production');
