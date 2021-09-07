@@ -37,7 +37,7 @@ include(`partials/${nav}`) %>
   <div class="row mt-2">
      <% for(let i =0; i<requestedProducts.length; i+=1){ %>
       <div class="col col-sm-6">
-       <img class="dashboard-images" src="/<%= requestedProducts[i].product_image_info %>">
+       <img class="dashboard-images" src="<%= requestedProducts[i].product_image_info %>">
        <p><%= requestedProducts[i].product_name %></p> 
       </div>
     <% } %>
