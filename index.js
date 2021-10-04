@@ -17,35 +17,6 @@ const s3 = new aws.S3({
   secretAccessKey: process.env.GIVEAWAY_SECRET_ACCESS_KEY,
 });
 
-// OLDER CODE: FOR DEVELOPMENT
-// set the name of the upload directory
-// for local development:
-// const multerUpload = multer({ dest: 'uploads/' });
-
-/* for deployment */
-// MULTER CONFIG FOR DEV AND PROD.
-// let multerUpload;
-// if (process.env.GIVEAWAY_ACCESS_KEY_ID) {
-//   console.log('I should run in production');
-//   multerUpload = multer({
-//     storage: multerS3({
-//       s3,
-//       bucket: process.env.S3_BUCKET_NAME,
-//       acl: 'public-read',
-//       metadata: (request, file, callback) => {
-//         callback(null, { fieldName: file.fieldname });
-//       },
-//       key: (request, file, callback) => {
-//         callback(null, Date.now().toString());
-//       },
-//     }),
-//   });
-// } else {
-//   console.log('running locally');
-//   multerUpload = multer({ dest: 'uploads/' });
-// }
-
-// only for prod i guess
 const multerUpload = multer({
   storage: multerS3({
     s3,
