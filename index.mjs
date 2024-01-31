@@ -1,8 +1,6 @@
 import express, { response } from 'express';
 import ejs from 'ejs';
 import bodyParser from 'body-parser';
-import pg from 'pg';
-import jsSHA from 'jssha';
 import cookieParser from 'cookie-parser';
 import axios from 'axios';
 import multer from 'multer';
@@ -12,8 +10,6 @@ import bindRoutes from './routes/routes.mjs';
 // set the name of the upload directory
 const multerUpload = multer({ dest: 'uploads/' });
 
-const { Pool } = pg;
-
 const app = express();
 app.set('view engine', 'ejs');
 app.use(express.static('public'));
@@ -21,55 +17,6 @@ app.use(express.static('uploads'));
 app.use(express.urlencoded({ extended: true }));
 app.use(cookieParser());
 app.use(methodOverride('_method'));
-
-/**
- * callback function for '/' route. renders index page.
- * check for the userName cookie. if cookie existes set the nav bar for the loggedin user.
- * else set the nav for guest users.
- * @param {string} req - route's request.
- * @param {string} res - route's response.
- */
-function handleIndexRoute(req, res) {
-  const { userName } = req.cookies;
-  let nav;
-  let redirectLink;
-  let redirectText;
-  if (userName) {
-    nav = 'index-loggedin-nav';
-    redirectLink = '/dashboard';
-    redirectText = 'User dashboard';
-  } else {
-    nav = 'index-nav';
-    redirectLink = '/register';
-    redirectText = 'Sign up';
-  }
-  res.render('index', {
-    nav, userName, redirectText, redirectLink,
-  });
-}
-
-/**
- * callback function for register post route. fetch user form data and save in db.
- * @param {string} req - route's request.
- * @param {string} res - route's response.
- */
-function handleRegistration(req, res) {
-  const { fname, lname, email } = req.body;
-  console.log(fname + lname + email);
-  // hash user password
-  const shaObj = new jsSHA('SHA-512', 'TEXT', { encoding: 'UTF8' });
-  shaObj.update(req.body.pwd);
-  const hashedPassword = shaObj.getHash('HEX');
-  const query = `INSERT INTO users (first_name, last_name, email, password) VALUES ('${fname}', '${lname}', '${email}', '${hashedPassword}')`;
-  pool.query(query).then(() => {
-    res.cookie('isLoggedIn', 'true');
-    res.cookie('userName', `${fname}`);
-    return pool.query(`SELECT id FROM users WHERE first_name = '${fname}'`);
-  }).then((result) => {
-    res.cookie('userId', `${result.rows[0].id}`);
-    res.redirect('/listing');
-  }).catch((err) => { console.log(err.stack); });
-}
 
 /**
  * callback function for login post route.
@@ -343,17 +290,6 @@ function renderProductInfo(req, res) {
   });
 }
 
-// get routes
-app.get('/', handleIndexRoute);
-
-app.get('/register', (req, res) => {
-  res.render('register');
-});
-
-app.get('/login', (req, res) => {
-  res.render('login');
-});
-
 app.get('/listing', createListing);
 app.get('/listing/:category', displayCategoryPage);
 app.get('/request-item/:productInfo', handleItemRequest);
@@ -362,20 +298,13 @@ app.get('/dashboard/:type', renderCustomDashboard);
 app.get('/product/:id', renderProductInfo);
 
 // post routes
-app.post('/register', handleRegistration);
+
 app.post('/login', handleLogin);
 app.post('/listing', multerUpload.single('productImageInfo'), handleListing);
 app.post('/logout', handleLogOut);
 
 // delete routes
 app.delete('/delete/:item', handleDeleteReq);
-
-// let PORT;
-// if (process.argv[2] === '80') {
-//   PORT = 80;
-// } else {
-//   PORT = 3004;
-// }
 
 bindRoutes(app);
 
