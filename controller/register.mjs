@@ -15,8 +15,8 @@ export default function initUserRegistration(db) {
     const hashedPassword = shaObj.getHash('HEX');
     try {
       const newUser = await db.User.create({
-        first_name: fname,
-        last_name: lname,
+        firstName: fname,
+        lastName: lname,
         email,
         password: hashedPassword,
       });
@@ -24,7 +24,6 @@ export default function initUserRegistration(db) {
       res.cookie('userName', `${fname}`);
       res.cookie('userId', `${newUser.id}`);
       res.redirect('/listing');
-      res.send('User created');
     } catch (err) {
       console.log(err);
     }
