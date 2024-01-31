@@ -21,3 +21,6 @@ npm-debug.log*
 # Ignore OS-specific files
 .DS_Store
 Thumbs.db
+
+# Ignore development reference files
+status.md
