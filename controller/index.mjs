@@ -1,4 +1,11 @@
 export default function initIndexController() {
+  /**
+ * callback function for '/' route. renders index page.
+ * check for the userName cookie. if cookie existes set the nav bar for the loggedin user.
+ * else set the nav for guest users.
+ * @param {string} req - route's request.
+ * @param {string} res - route's response.
+ */
   const index = async (req, res) => {
     const { userName } = req.cookies;
     let nav;
