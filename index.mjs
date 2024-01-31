@@ -22,27 +22,6 @@ app.use(express.urlencoded({ extended: true }));
 app.use(cookieParser());
 app.use(methodOverride('_method'));
 
-//  configure database
-let pgConnectionConfig;
-if (process.env.DATABASE_URL) {
-  // pg will take in the entire value and use it to connect
-  pgConnectionConfig = {
-    connectionString: process.env.DATABASE_URL,
-    ssl: {
-      rejectUnauthorized: false,
-    },
-  };
-} else {
-  pgConnectionConfig = {
-    user: 'jyotikattani',
-    host: 'localhost',
-    database: 'give_away',
-    port: '5432',
-  };
-}
-
-const pool = new Pool(pgConnectionConfig);
-
 /**
  * callback function for '/' route. renders index page.
  * check for the userName cookie. if cookie existes set the nav bar for the loggedin user.
