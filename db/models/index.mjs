@@ -1,9 +1,9 @@
 import Sequelize from 'sequelize';
 import url from 'url';
-import allConfig from '../../config/database';
-import requestModel from './request';
-import listingModel from './listing';
-import userModel from './user';
+import allConfig from '../../config/database.js';
+import requestModel from './request.mjs';
+import listingModel from './listing.mjs';
+import userModel from './user.mjs';
 
 const env = process.env.NODE_ENV || 'development';
 
