@@ -19,50 +19,6 @@ app.use(cookieParser());
 app.use(methodOverride('_method'));
 
 /**
- * callback function for login post route.
- *  check for user auth.
- */
-function handleLogin(req, res) {
-  const { email, pwd } = req.body;
-  pool.query(`SELECT * FROM users WHERE email = '${email}'`, (err, result) => {
-    if (err) {
-      console.log('error in executing query.', err.stack);
-      res.status(503).send(result.rows);
-      return;
-    }
-    if (result.rows.length === 0) {
-      res.status(403).send('login failed');
-      return;
-    }
-    const user = result.rows;
-    console.log(result.rows[0]);
-    const shaObj = new jsSHA('SHA-512', 'TEXT', { encoding: 'UTF8' });
-    shaObj.update(req.body.pwd);
-    const hashedPassword = shaObj.getHash('HEX');
-    console.log(`user's saved password: ${user[0].password}`);
-    console.log(`hashed password ${hashedPassword}`);
-
-    if (user[0].password !== hashedPassword) {
-      res.status(403).send('login failed');
-      return;
-    }
-    res.cookie('isLoggedIn', true);
-    res.cookie('userName', `${user[0].first_name}`);
-    res.cookie('userId', `${user[0].id}`);
-
-    if (req.cookies.requestItem === 'true') {
-      res.clearCookie('requestItem');
-      res.redirect('/');
-      return;
-    }
-    // if user login request comes from listings page, redirect user back to the page.
-    // logic yet to be worked out.
-    // res.redirect('/listing');
-    res.redirect('/');
-  });
-}
-
-/**
  * callback function for '/listing'.
  * checks for cookies. If user is logged in, renders the create listing page.
  * else renders page to prompt user to signup or login.
@@ -299,7 +255,6 @@ app.get('/product/:id', renderProductInfo);
 
 // post routes
 
-app.post('/login', handleLogin);
 app.post('/listing', multerUpload.single('productImageInfo'), handleListing);
 app.post('/logout', handleLogOut);
 
