@@ -1,12 +1,12 @@
 # GiveAway
 
-## 🪴 What does the app do
+## What does the app do
 
 GiveAway connects people who are willing to give away stuff (electronics/furniture, etc.. in good/ working condition) they do not use or need anymore to someone who needs that particular product.
 
 ## What problem does the app solve,
 
-A. Reduce carbon footprint. Increase product life span.
+Reduce carbon footprint. Increase product life span.
 
 ## For whom?
 
@@ -20,7 +20,7 @@ Environmentally conscious people. Someone who realizes climate change is a burni
 
 ##### What are users goal?
 
-Giving away unused items they own. And finding the item they need.
+Giving away unused items they own. And finding a product they need.
 
 ##### User journey
 
@@ -39,3 +39,26 @@ User 'B' either thanks user 'A' for the generosity or buys him a beer.
 - Product requests data.
 
 <img src="public/images/erd.png">
+
+# Installation Instructions
+
+- Clone the Repository
+
+```bash
+git clone https://github.com/jokatty/give-away-express-app.git
+```
+
+- Navigate to the Project Directory
+
+`cd give-away-express-app`
+
+- Install Dependencies
+
+`npm i`
+
+## Development Setup
+
+- Run the application
+  `npm start`
+- Visit the Application
+  ` http://localhost:3004`
