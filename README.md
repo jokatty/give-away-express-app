@@ -62,3 +62,8 @@ git clone https://github.com/jokatty/give-away-express-app.git
   `npm start`
 - Visit the Application
   ` http://localhost:3004`
+
+## Technologies used
+
+- Frontend: ejs
+- Backend: Express, PostgreSQL
