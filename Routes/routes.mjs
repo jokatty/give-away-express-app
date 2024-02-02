@@ -21,4 +21,5 @@ export default function routes(app) {
   app.post('/login', loginController.handleLogin);
   // routes related to listing
   app.get('/listing', listingController.allowListing);
+  app.get('/listing/:category', listingController.displayCategoryPage);
 }
