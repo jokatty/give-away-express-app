@@ -50,35 +50,6 @@ function handleListing(req, res) {
 }
 
 /**
- * callback function to render category page.
- * checks for user login status and sets the nav
- * queries the 'listings' table and fetches products of the the requested categoy.
- */
-function displayCategoryPage(req, res) {
-  let nav = '';
-  const { userName } = req.cookies;
-  if (userName) {
-    nav = 'index-loggedin-nav';
-  } else {
-    nav = 'index-nav';
-  }
-  // extract params data passed in the route
-  const categoryName = req.params.category;
-  const category = `${categoryName[0].toUpperCase()}${categoryName.slice(1)}`;
-  const query = `SELECT * FROM listings WHERE product_category = '${categoryName}'`;
-  pool.query(query).then((result) => {
-    const date = result.rows.map((listing) => {
-      console.log(moment(listing.created_at).from());
-    });
-    res.render('category', {
-      productInfo: result.rows, category, nav, userName,
-    });
-  }).catch((err) => {
-    console.log(err.stack);
-  });
-}
-
-/**
  * callback function for '/request-item'.
  * checks for user logged in status.
  * fetches requested product's information from route params
@@ -232,7 +203,6 @@ function renderProductInfo(req, res) {
   });
 }
 
-app.get('/listing/:category', displayCategoryPage);
 app.get('/request-item/:productInfo', handleItemRequest);
 app.get('/dashboard', renderUserDashboard);
 app.get('/dashboard/:type', renderCustomDashboard);
