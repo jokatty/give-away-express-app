@@ -19,20 +19,6 @@ app.use(cookieParser());
 app.use(methodOverride('_method'));
 
 /**
- * callback function for '/listing'.
- * checks for cookies. If user is logged in, renders the create listing page.
- * else renders page to prompt user to signup or login.
- */
-function createListing(req, res) {
-  const { isLoggedIn, userName } = req.cookies;
-  if (isLoggedIn === 'true') {
-    res.render('listing');
-  } else {
-    res.render('guest-user');
-  }
-}
-
-/**
  * callback function for '/listing' post route.
  * update the listings table with the user input data.
  * use 'multer' for storing user generated data in uploads dir.
@@ -246,7 +232,6 @@ function renderProductInfo(req, res) {
   });
 }
 
-app.get('/listing', createListing);
 app.get('/listing/:category', displayCategoryPage);
 app.get('/request-item/:productInfo', handleItemRequest);
 app.get('/dashboard', renderUserDashboard);
