@@ -1,8 +1,11 @@
+import multer from 'multer';
 import db from '../db/models/index.mjs';
 import initIndexController from '../controller/index.mjs';
 import initUserRegistration from '../controller/register.mjs';
 import initLoginController from '../controller/login.mjs';
 import initListingController from '../controller/listing.mjs';
+
+const multerUpload = multer({ dest: 'uploads/' });
 
 export default function routes(app) {
   const indexController = initIndexController();
@@ -22,4 +25,5 @@ export default function routes(app) {
   // routes related to listing
   app.get('/listing', listingController.allowListing);
   app.get('/listing/:category', listingController.displayCategoryPage);
+  app.post('/listing', multerUpload.single('productImageInfo'), listingController.createListing);
 }
