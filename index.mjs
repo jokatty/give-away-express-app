@@ -17,29 +17,6 @@ app.use(cookieParser());
 app.use(methodOverride('_method'));
 
 /**
- * callback function for '/request-item'.
- * checks for user logged in status.
- * fetches requested product's information from route params
- * updates the 'requests' table in db with the new requests.
- */
-function handleItemRequest(req, res) {
-  if (!req.cookies.isLoggedIn) {
-    res.cookie('requestItem', 'true');
-    res.render('guest-user');
-    return;
-  }
-  // params passes the listing_id
-  const { productInfo } = req.params;
-  console.log(productInfo);
-  const listingId = productInfo;
-  const { userId } = req.cookies;
-  const query = `INSERT INTO requests (listing_id, user_id) VALUES ('${listingId}', '${userId}')`;
-  pool.query(query).then(() => {
-    res.render('request-confirmation');
-  }).catch((err) => { console.log(err); });
-}
-
-/**
  * callback function for 'dashboard/:type'.
  * based on route param 'type' renders either all requests or all added-items page.
  */
@@ -170,7 +147,6 @@ function renderProductInfo(req, res) {
   });
 }
 
-app.get('/request-item/:productInfo', handleItemRequest);
 app.get('/dashboard', renderUserDashboard);
 app.get('/dashboard/:type', renderCustomDashboard);
 app.get('/product/:id', renderProductInfo);
