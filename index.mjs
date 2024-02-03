@@ -3,12 +3,10 @@ import ejs from 'ejs';
 import bodyParser from 'body-parser';
 import cookieParser from 'cookie-parser';
 import axios from 'axios';
-import multer from 'multer';
+
 import methodOverride from 'method-override';
 import moment from 'moment';
 import bindRoutes from './routes/routes.mjs';
-// set the name of the upload directory
-const multerUpload = multer({ dest: 'uploads/' });
 
 const app = express();
 app.set('view engine', 'ejs');
@@ -17,37 +15,6 @@ app.use(express.static('uploads'));
 app.use(express.urlencoded({ extended: true }));
 app.use(cookieParser());
 app.use(methodOverride('_method'));
-
-/**
- * callback function for '/listing' post route.
- * update the listings table with the user input data.
- * use 'multer' for storing user generated data in uploads dir.
- */
-function handleListing(req, res) {
-  console.log('request came in');
-  console.log(req.file);
-  const {
-    productCategory, productName, productDescription,
-  } = req.body;
-  const { userId } = req.cookies;
-
-  const query = `INSERT INTO listings(product_category, product_name, product_description, product_image_info, user_id, is_available) VALUES ('${productCategory}', '${productName}', '${productDescription}', '${req.file.filename}', '${userId}', 'true') `;
-
-  // user promises for nested queries
-  pool.query(query).then((result) => {
-    console.log(result);
-    return pool.query(`SELECT * FROM listings WHERE product_category = '${productCategory}'`);
-  }).then((selectResult) => {
-    console.log(selectResult);
-    const category = `${productCategory[0].toUpperCase()}${productCategory.slice(1)}`;
-    // to direct user to the product category page they posted
-    // res.render('category', { productInfo: selectResult.rows, category });
-    res.redirect('/dashboard/added-product');
-  })
-    .catch((err) => {
-      console.log(err.stack);
-    });
-}
 
 /**
  * callback function for '/request-item'.
@@ -210,7 +177,6 @@ app.get('/product/:id', renderProductInfo);
 
 // post routes
 
-app.post('/listing', multerUpload.single('productImageInfo'), handleListing);
 app.post('/logout', handleLogOut);
 
 // delete routes
