@@ -39,6 +39,8 @@ db.User = userModel(sequelize, Sequelize.DataTypes);
 
 db.User.hasMany(db.Listing);
 db.Listing.belongsTo(db.User);
+db.Listing.hasOne(db.Request);
+db.Request.belongsTo(db.Listing);
 
 db.sequelize = sequelize;
 db.Sequelize = Sequelize;
