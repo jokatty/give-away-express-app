@@ -52,37 +52,6 @@ function renderCustomDashboard(req, res) {
 }
 
 /**
- * callback function for '/dashboard' route.
- * renders user's dashboard with the all transactions history.
- * quries listings table and requests table.
- */
-function renderUserDashboard(req, res) {
-  const { userId } = req.cookies;
-  let listingResult;
-  let requestResult;
-  let nav = '';
-  const { userName } = req.cookies;
-  if (userName) {
-    nav = 'index-loggedin-nav';
-  } else {
-    nav = 'index-nav';
-  }
-
-  const query = `SELECT * FROM listings WHERE user_id = '${userId}'`;
-  // use of promisses for nested queries.
-  pool.query(query).then((result) => {
-    listingResult = result;
-    return pool.query(`SELECT * FROM listings JOIN requests ON requests.listing_id =listings.id WHERE requests.user_id = '${userId}'`);
-  }).then((selectResult) => {
-    requestResult = selectResult;
-    console.log(selectResult);
-    res.render('dashboard-user', {
-      listedProducts: listingResult.rows, requestedProducts: requestResult.rows, nav, userName,
-    });
-  }).catch((err) => { console.log(err); });
-}
-
-/**
  * callback function for '/logout' post route
  * clear cookies to log out the user.
  * render logout confirmation page.
@@ -147,7 +116,6 @@ function renderProductInfo(req, res) {
   });
 }
 
-app.get('/dashboard', renderUserDashboard);
 app.get('/dashboard/:type', renderCustomDashboard);
 app.get('/product/:id', renderProductInfo);
 
