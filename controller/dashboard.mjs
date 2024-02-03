@@ -17,7 +17,7 @@ export default function initDashboardController(db) {
       // select all the listing made by the user with userId
       const userListings = await db.Listing.findAll({
         where: {
-          user_id: userId,
+          userId,
         },
       });
       // select all the listing requested by the user with userId
@@ -26,7 +26,7 @@ export default function initDashboardController(db) {
           {
             model: db.Request,
             where: {
-              user_id: userId,
+              userId,
             },
           },
         ],
