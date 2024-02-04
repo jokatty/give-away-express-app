@@ -40,6 +40,12 @@ User 'B' either thanks user 'A' for the generosity or buys him a beer.
 
 <img src="public/images/erd.png">
 
+# Demo Video
+
+Check out the demo video to get a quick overview of how GiveAway works:
+
+[![GiveAway Demo](https://www.youtube.com/embed/dSa4IoxDuTU?si=wd16VVdULqovGOQU)](https://youtu.be/dSa4IoxDuTU)
+
 # Installation Instructions
 
 - Clone the Repository
