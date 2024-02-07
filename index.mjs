@@ -55,33 +55,6 @@ function handleDeleteReq(req, res) {
   }
 }
 
-/**
- * callback function for '/product' route
- * renders complete information about the product
- */
-function renderProductInfo(req, res) {
-  let nav = '';
-  const { userName } = req.cookies;
-  if (userName) {
-    nav = 'index-loggedin-nav';
-  } else {
-    nav = 'index-nav';
-  }
-  const productId = req.params.id;
-  const query = `SELECT * FROM listings JOIN users ON users.id = listings.user_id WHERE listings.id = '${productId}'`;
-  pool.query(query).then((result) => {
-    const date = result.rows.map((listing) => (moment(listing.created_at).from()));
-
-    res.render('product', {
-      productInfo: result.rows[0], nav, userName, date, productId,
-    });
-  }).catch((err) => {
-    console.log(err.stack);
-  });
-}
-
-app.get('/product/:id', renderProductInfo);
-
 // post routes
 
 app.post('/logout', handleLogOut);
