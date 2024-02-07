@@ -3,9 +3,8 @@ import ejs from 'ejs';
 import bodyParser from 'body-parser';
 import cookieParser from 'cookie-parser';
 import axios from 'axios';
-
 import methodOverride from 'method-override';
-import moment from 'moment';
+
 import bindRoutes from './routes/routes.mjs';
 
 const app = express();
