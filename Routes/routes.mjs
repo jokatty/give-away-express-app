@@ -34,4 +34,5 @@ export default function routes(app) {
   app.get('/request-item/:productInfo', requestProductController.requestProduct);
   // dashboards
   app.get('/dashboard', dashboardController.renderUserDashboard);
+  app.get('/dashboard/:type', dashboardController.renderCustomDashboard);
 }
