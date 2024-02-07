@@ -12,8 +12,8 @@ include('partials/index-loggedin-nav') %>
  <div class="row mt-4">
       <% for(let i =0; i<listedProducts.length; i+=1){ %>
         <div class="col-6">
-          <img class="dashboard-images"src="/<%= listedProducts[i].product_image_info %>" />
-          <p><%= listedProducts[i].product_name %></p>
+          <img class="dashboard-images"src="/<%= listedProducts[i].productImageInfo %>" />
+          <p><%= listedProducts[i].productName %></p>
           <p class="card-subtitle mb-2 text-muted">Added on: <%= date[i] %></p>
           <form action="/delete/added-product?_method=DELETE" method="POST">
             <input type="hidden" name="productId" value="<%= listedProducts[i].id %>">
