@@ -17,41 +17,6 @@ app.use(cookieParser());
 app.use(methodOverride('_method'));
 
 /**
- * callback function for 'dashboard/:type'.
- * based on route param 'type' renders either all requests or all added-items page.
- */
-
-function renderCustomDashboard(req, res) {
-  if (req.params.type === 'request') {
-    const { userId, userName } = req.cookies;
-    console.log(userId);
-    const query = `SELECT * FROM requests JOIN listings ON listings.id = requests.listing_id WHERE requests.user_id = '${userId}' `;
-    pool.query(query, (err, result) => {
-      if (err) {
-        console.log(err);
-        return;
-      }
-      console.log(result);
-      const date = result.rows.map((listing) => (moment(listing.created_at).from()));
-      res.render('dashboard-request', { requestedProducts: result.rows, userName, date });
-    });
-  }
-  if (req.params.type === 'added-product') {
-    const { userId, userName } = req.cookies;
-    const query = `SELECT * FROM listings WHERE user_id = '${userId}'`;
-    pool.query(query, (err, result) => {
-      if (err) {
-        console.log(err);
-        return err;
-      }
-      console.log(result);
-      const date = result.rows.map((listing) => (moment(listing.created_at).from()));
-      res.render('dashboard-added-product', { listedProducts: result.rows, userName, date });
-    });
-  }
-}
-
-/**
  * callback function for '/logout' post route
  * clear cookies to log out the user.
  * render logout confirmation page.
@@ -116,7 +81,6 @@ function renderProductInfo(req, res) {
   });
 }
 
-app.get('/dashboard/:type', renderCustomDashboard);
 app.get('/product/:id', renderProductInfo);
 
 // post routes
