@@ -4,7 +4,7 @@ import initIndexController from '../controller/index.mjs';
 import initUserRegistration from '../controller/register.mjs';
 import initLoginController from '../controller/login.mjs';
 import initListingController from '../controller/listing.mjs';
-import initRequestProductController from '../controller/requestProduct.mjs';
+import initProductController from '../controller/product.mjs';
 import initDashboardController from '../controller/dashboard.mjs';
 
 const multerUpload = multer({ dest: 'uploads/' });
@@ -14,7 +14,7 @@ export default function routes(app) {
   const userRegistrationController = initUserRegistration(db);
   const loginController = initLoginController(db);
   const listingController = initListingController(db);
-  const requestProductController = initRequestProductController(db);
+  const productController = initProductController(db);
   const dashboardController = initDashboardController(db);
 
   app.get('/', indexController.index);
@@ -30,8 +30,9 @@ export default function routes(app) {
   app.get('/listing', listingController.allowListing);
   app.get('/listing/:category', listingController.displayCategoryPage);
   app.post('/listing', multerUpload.single('productImageInfo'), listingController.createListing);
-  // routes related to item request
-  app.get('/request-item/:productInfo', requestProductController.requestProduct);
+  // routes related to products - item request and product info
+  app.get('/request-item/:productInfo', productController.requestProduct);
+  app.get('/product/:id', productController.renderProductInfo);
   // dashboards
   app.get('/dashboard', dashboardController.renderUserDashboard);
   app.get('/dashboard/:type', dashboardController.renderCustomDashboard);
