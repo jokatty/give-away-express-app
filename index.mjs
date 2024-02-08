@@ -4,7 +4,6 @@ import bodyParser from 'body-parser';
 import cookieParser from 'cookie-parser';
 import axios from 'axios';
 import methodOverride from 'method-override';
-
 import bindRoutes from './routes/routes.mjs';
 
 const app = express();
@@ -14,37 +13,6 @@ app.use(express.static('uploads'));
 app.use(express.urlencoded({ extended: true }));
 app.use(cookieParser());
 app.use(methodOverride('_method'));
-
-/**
- * callback function for '/delete' route
- * delete the product from the listings table in db.
- */
-function handleDeleteReq(req, res) {
-  if (req.params.item === 'added-product') {
-    const { productId } = req.body;
-    const deleteQuery = `DELETE FROM listings WHERE id = '${productId}'`;
-    pool.query(deleteQuery, (err, result) => {
-      if (err) {
-        console.log(err);
-        return;
-      }
-      res.redirect('/dashboard/added-product');
-    });
-  } else if (req.params.item === 'requested-product') {
-    const { productId } = req.body;
-    const deleteQuery = `DELETE FROM listings WHERE id = '${productId}'`;
-    pool.query(deleteQuery, (err, result) => {
-      if (err) {
-        console.log(err);
-        return;
-      }
-      res.redirect('/dashboard/request');
-    });
-  }
-}
-
-// delete routes
-app.delete('/delete/:item', handleDeleteReq);
 
 bindRoutes(app);
 
