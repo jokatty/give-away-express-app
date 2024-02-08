@@ -16,18 +16,6 @@ app.use(cookieParser());
 app.use(methodOverride('_method'));
 
 /**
- * callback function for '/logout' post route
- * clear cookies to log out the user.
- * render logout confirmation page.
- */
-function handleLogOut(req, res) {
-  res.clearCookie('userName');
-  res.clearCookie('isLoggedIn');
-  res.clearCookie('userId');
-  res.render('logout');
-}
-
-/**
  * callback function for '/delete' route
  * delete the product from the listings table in db.
  */
@@ -54,10 +42,6 @@ function handleDeleteReq(req, res) {
     });
   }
 }
-
-// post routes
-
-app.post('/logout', handleLogOut);
 
 // delete routes
 app.delete('/delete/:item', handleDeleteReq);
