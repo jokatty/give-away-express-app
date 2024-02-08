@@ -30,6 +30,8 @@ user 'B' needs a new hairdryer goes to GiveAway to check if the product s/he nee
 They can decide on the exchange and related logistics.
 User 'B' either thanks user 'A' for the generosity or buys him a beer.
 
+## Wireframe
+
 <img src="public/images/wireframe.jpg">
 
 ## What data does the app handle?
