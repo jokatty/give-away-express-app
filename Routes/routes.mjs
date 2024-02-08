@@ -6,6 +6,7 @@ import initLoginController from '../controller/login.mjs';
 import initListingController from '../controller/listing.mjs';
 import initProductController from '../controller/product.mjs';
 import initDashboardController from '../controller/dashboard.mjs';
+import initLogoutController from '../controller/logout.mjs';
 
 const multerUpload = multer({ dest: 'uploads/' });
 
@@ -16,6 +17,7 @@ export default function routes(app) {
   const listingController = initListingController(db);
   const productController = initProductController(db);
   const dashboardController = initDashboardController(db);
+  const logoutController = initLogoutController();
 
   app.get('/', indexController.index);
   app.get('/register', (req, res) => {
@@ -24,6 +26,7 @@ export default function routes(app) {
   app.get('/login', (req, res) => {
     res.render('login');
   });
+  app.post('/logout', logoutController.handleLogOut);
   app.post('/register', userRegistrationController.createUser);
   app.post('/login', loginController.handleLogin);
   // routes related to listing
