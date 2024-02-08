@@ -7,6 +7,7 @@ import initListingController from '../controller/listing.mjs';
 import initProductController from '../controller/product.mjs';
 import initDashboardController from '../controller/dashboard.mjs';
 import initLogoutController from '../controller/logout.mjs';
+import initDeleteController from '../controller/deleteProduct.mjs';
 
 const multerUpload = multer({ dest: 'uploads/' });
 
@@ -18,6 +19,7 @@ export default function routes(app) {
   const productController = initProductController(db);
   const dashboardController = initDashboardController(db);
   const logoutController = initLogoutController();
+  const deleteController = initDeleteController(db);
 
   app.get('/', indexController.index);
   app.get('/register', (req, res) => {
@@ -39,4 +41,6 @@ export default function routes(app) {
   // dashboards
   app.get('/dashboard', dashboardController.renderUserDashboard);
   app.get('/dashboard/:type', dashboardController.renderCustomDashboard);
+  // delete added or requested items.
+  app.delete('/delete/:item', deleteController.handleDeleteReq);
 }
