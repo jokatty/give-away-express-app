@@ -40,7 +40,7 @@ User 'B' either thanks user 'A' for the generosity or buys him a beer.
 - Product listings data.
 - Product requests data.
 
-<img src="public/images/erd.png">
+<img src="public/images/giveaway_erd.png">
 
 # Demo Video
 
