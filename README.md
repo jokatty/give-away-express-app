@@ -24,11 +24,15 @@ Giving away unused items they own. And finding a product they need.
 
 ##### User journey
 
-Say user 'A' has a hairdryer, perfectly working condition. And does not use it because s/he upgraded.
-'A' as an environmentally aware and good soul lists the hairdryer on the 'GiveAway' app.
-user 'B' needs a new hairdryer goes to GiveAway to check if the product s/he needs is available on the platform. If they find the product they connects with the user 'A' who listed the product.
-They can decide on the exchange and related logistics.
-User 'B' either thanks user 'A' for the generosity or buys him a beer.
+- Say user 'A' has a hairdryer, perfectly working condition. And does not use it because s/he upgraded.
+
+- 'A' as an environmentally aware and good soul lists the hairdryer on the 'GiveAway' app.
+
+- user 'B' needs a new hairdryer goes to GiveAway to check if the product s/he needs is available on the platform. If they find the product they connects with the user 'A' who listed the product.
+
+- They can decide on the exchange and related logistics.
+
+- User 'B' either thanks user 'A' for the generosity or buys him a beer.
 
 ## Wireframe
 
