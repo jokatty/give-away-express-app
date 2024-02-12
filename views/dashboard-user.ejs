@@ -24,8 +24,8 @@ include(`partials/${nav}`) %>
   <div class="row mt-1">
     <% for(let i =0; i<listedProducts.length; i+=1){ %>
       <div class="col col-sm-6">
-       <img class="dashboard-images" src="/<%= listedProducts[i].product_image_info %>">
-       <p><%= listedProducts[i].product_name %></p> 
+       <img class="dashboard-images" src="/<%= listedProducts[i].productImageInfo %>">
+       <p><%= listedProducts[i].productName %></p> 
       </div>
    <% } %>
   </div>
@@ -37,8 +37,8 @@ include(`partials/${nav}`) %>
   <div class="row mt-2">
      <% for(let i =0; i<requestedProducts.length; i+=1){ %>
       <div class="col col-sm-6">
-       <img class="dashboard-images" src="/<%= requestedProducts[i].product_image_info %>">
-       <p><%= requestedProducts[i].product_name %></p> 
+       <img class="dashboard-images" src="/<%= requestedProducts[i].productImageInfo %>">
+       <p><%= requestedProducts[i].productName %></p> 
       </div>
     <% } %>
   </div>
