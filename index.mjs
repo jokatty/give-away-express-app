@@ -4,7 +4,7 @@ import bodyParser from 'body-parser';
 import cookieParser from 'cookie-parser';
 import axios from 'axios';
 import methodOverride from 'method-override';
-import bindRoutes from './routes/routes.mjs';
+import bindRoutes from './Routes/routes.mjs';
 
 const app = express();
 app.set('view engine', 'ejs');
