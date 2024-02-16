@@ -49,6 +49,7 @@ Giving away unused items they own. And finding a product they need.
 # Demo Video
 
 Check out the demo video to get a quick overview of how GiveAway works:
+Watch the demo video here:
 
 [![GiveAway Demo](https://www.youtube.com/embed/dSa4IoxDuTU?si=wd16VVdULqovGOQU)](https://youtu.be/dSa4IoxDuTU)
 
