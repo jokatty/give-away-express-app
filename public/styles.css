@@ -130,6 +130,11 @@ font-family: 'Poppins', sans-serif; */
 .product-page-links {
   font-size: 0.76rem;
 }
+
+.card-img-top {
+  max-height: 300px;
+  object-fit: contain;
+}
 /* footer style */
 footer {
   background-color: #f4f3e4;

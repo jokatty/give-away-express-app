@@ -1,36 +1,27 @@
 <%- include('partials/header', {title: 'product information'}) %> <%-
 include(`partials/${nav}`) %>
 
-<div class="container-fluid mt-4">
-  <div class="row d-flex justify-content-center"><h2>Product details</h2></div>
-  <div class="card">
-    <img
-      src="/<%= productInfo.productImageInfo %>"
-      class="card-img-top"
-      alt="product image"
-    />
-    <hr />
-    <div class="card-body">
-      <h5 class="card-title"><%= productInfo.productName %></h5>
-      <p class="card-text"><%= productInfo.productDescription %></p>
-    </div>
-    <ul class="list-group list-group-flush">
-      <li class="list-group-item">Posted by: <%= productInfo.user.firstName %></li>
-      <li class="list-group-item">Posted on: <%= date %></li>
-    </ul>
-    <div class="card-body d-flex justify-content-around">
-      <a
-        href="/listing/<%= productInfo.product_category %>"
-        class="card-link product-page-links"
-        >All <%= productInfo.product_category %></a
-      >
-      <a href="/" class="card-link product-page-links">Explore listings</a>
 
-      <a
-        href="/request-item/<%= productId %>"
-        class="card-link product-page-links"
-        >Request item</a
-      >
+<div class="container mt-4">
+  <div class="row justify-content-center">
+    <div class="col-md-8">
+      <div class="card">
+        <img src="/<%= productInfo.productImageInfo %>" class="card-img-top p-2" alt="product image" />
+        <div class="card-body">
+          <h2 class="card-title"><%= productInfo.productName %></h2>
+          <p class="card-text"><%= productInfo.productDescription %></p>
+        </div>
+        <ul class="list-group list-group-flush">
+          <li class="list-group-item">Posted by: <%= productInfo.user.firstName %></li>
+          <li class="list-group-item">Posted on: <%= date %></li>
+        </ul>
+        <div class="card-body d-flex justify-content-between">
+          <a href="/listing/<%= productInfo.productCategory %>" class="card-link product-page-links">All <%= productInfo.productCategory %></a>
+          <a href="/" class="card-link product-page-links">Explore listings</a>
+          <a href="/request-item/<%= productId %>" class="card-link product-page-links">Request item</a>
+        </div>
+      </div>
     </div>
   </div>
 </div>
+
