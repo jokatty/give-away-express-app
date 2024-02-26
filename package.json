@@ -6,7 +6,7 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "start": "node index.js",
-    "setup": "npx sequelize db:migrate"
+    "setup": "npx sequelize db:migrate && npx sequelize db:seed:all"
   },
   "repository": {
     "type": "git",
