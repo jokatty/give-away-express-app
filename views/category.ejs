@@ -11,24 +11,26 @@ include(`partials/${nav}`) %>
 </div>
 
 <div class="container mt-4">
-     <% for(let i =0; i<productInfo.length; i+=1){ %>
-      <div class="card mb-3" style="max-width: 540px;">
-  <div class="row no-gutters">
-    <div class="col-4">
-      <img src="/<%= productInfo[i].productImageInfo %>" class="product-image" alt="product image">
-    </div>
-    <div class="col-8 pl-4">
-      <div class="card-body">
-        <h5 class="card-title"><%= productInfo[i].productName %></h5>
-       
-        <a href="/product/<%= productInfo[i].id%>" class="card-link">View post</a>
-        
+  <div class="row justify-content-center">
+    <% for(let i =0; i<productInfo.length; i+=1){ %>
+      <div class="col-md-6 mb-3"> <!-- Adjust column width as needed -->
+        <div class="card" style="max-width: 540px;">
+          <div class="row no-gutters">
+            <div class="col-4">
+              <img src="/<%= productInfo[i].productImageInfo %>" class="product-image" alt="product image">
+            </div>
+            <div class="col-8 pl-4">
+              <div class="card-body">
+                <h5 class="card-title"><%= productInfo[i].productName %></h5>
+                <a href="/product/<%= productInfo[i].id%>" class="card-link">View post</a>
+              </div>
+            </div>
+          </div>
+        </div>
       </div>
-    </div>
+    <% } %> 
   </div>
 </div>
-  <% } %> 
 
-</div>
 
  <%- include('partials/footer') %>
